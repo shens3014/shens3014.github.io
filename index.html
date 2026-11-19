@@ -5,79 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Dart，高级算法工程师。专注 AI Agent、全栈应用开发与 A 股量化研究。">
   <title>Dart · 高级算法工程师 | AI Agent 与量化研究</title>
-  <style>
-    :root { color-scheme: light; --ink: #18372d; --paper: #fafbf6; --rule: #c6d2c6; }
-    * { box-sizing: border-box; }
-    body { margin: 0; background: var(--paper); color: var(--ink); font: 1rem/1.75 "PingFang SC", "Microsoft YaHei", sans-serif; }
-    .wrap { width: min(68rem, 88%); margin: auto; }
-    header { color: #f6faed; background: #16392f; }
-    nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #4b675d; }
-    nav strong { font: bold 1.5rem Georgia, serif; }
-    a { color: inherit; text-underline-offset: .3em; }
-    a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
-    .intro { padding: clamp(2rem, 6vw, 5rem) 0; }
-    h1 { margin: 0; color: #d9f39c; font: normal clamp(5rem, 10vw, 9rem)/1 Georgia, serif; letter-spacing: -.07em; }
-    .role { margin: .75rem 0 0; font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 600; }
-    .summary { max-width: 37em; margin: .85rem 0 0; color: #d9e4db; font-size: 1.05rem; }
-    main { padding: 3rem 0 4rem; }
-    h2 { margin: 0; padding-bottom: .8rem; border-bottom: 2px solid var(--ink); font-size: 1.5rem; }
-    .skills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 3.5rem; }
-    article { padding: 1.7rem 0; border-bottom: 1px solid var(--rule); }
-    h3 { margin: 0; font-size: 1.22rem; }
-    p { margin: .55rem 0; }
-    .tools { margin: .8rem 0 0; color: #43634f; font: .9rem/1.6 ui-monospace, monospace; }
-    @media (max-width: 700px) { .skills { grid-template-columns: 1fr; } main { padding-top: 2rem; } }
-  </style>
+  <meta name="theme-color" content="#f8f8f6">
+  <link rel="stylesheet" href="style.css">
+  <script src="motion.js" defer></script>
 </head>
 <body>
-  <header>
-    <div class="wrap">
-      <nav aria-label="个人链接"><strong>Dart.</strong><a href="https://github.com/shens3014">GitHub</a></nav>
-      <div class="intro"><h1>Dart.</h1><p class="role">高级算法工程师</p>
-        <p class="summary">我开发能查数据、读公告、调用分析工具的 AI Agent，也把这些能力接入 Web 界面，用于 A 股选股、策略回测和复盘。</p>
-      </div>
-    </div>
-  </header>
-  <main class="wrap" id="skills">
-    <h2>专业技能</h2>
-    <div class="skills">
-      <article>
-        <h3>Agent 编排与执行控制</h3>
+  <header><nav class="wrap"><a class="logo" href="#top" aria-label="Dart 首页">Dart<span>.</span></a>
+    <div><a href="#skills">专业技能</a><a class="github" href="https://github.com/shens3014">GitHub</a></div></nav></header>
+  <main id="top"><section class="hero wrap">
+    <div class="intro"><p class="role">高级算法工程师</p><h1>Dart<span>.</span></h1>
+    <p class="lead">AI Agent<span> / </span>全栈开发<span> / </span>量化研究</p>
+    <p class="summary">我开发能查数据、读公告、调用分析工具的 AI Agent，也把这些能力接入 Web 界面，用于 A 股选股、策略回测和复盘。</p>
+    <a class="button" href="#skills">探索专业技能</a></div>
+    <div class="sculpture"><canvas aria-hidden="true"></canvas></div>
+  </section>
+  <section id="skills" class="library"><div class="wrap"><h2>专业技能<span>.</span></h2>
+    <div class="filters" aria-label="筛选技能" role="group" hidden><button type="button" data-filter="all" aria-pressed="true">全部</button><button type="button" data-filter="agent" aria-pressed="false">AI Agent</button><button type="button" data-filter="web" aria-pressed="false">全栈开发</button><button type="button" data-filter="quant" aria-pressed="false">量化研究</button></div>
+    <div class="skills"><section class="group" data-category="agent"><h3>AI Agent</h3><div><article>
+        <h4>Agent 编排与执行控制</h4>
         <p>设计多步任务时，我先区分哪些信息可以并行获取，哪些结论必须等待上一步。以财务比较为例，两家公司的报表可以同时查；计算增长率之前，要先对齐报告期、币种和单位。</p>
         <p>我按失败原因设计后续动作：临时超时可以重试，缺少报告期需要补参数，数据源缺失则应在回答中标明。分别记录工具耗时和模型调用轮数，才能判断优化接口还是调整任务拆分。</p>
         <p class="tools">Python · ReAct · Function Calling · MCP</p>
-      </article>
-      <article>
-        <h3>金融检索与证据排序</h3>
+      </article><article>
+        <h4>金融检索与证据排序</h4>
         <p>金融查询常混合两类需求：证券代码、报告期需要精确匹配，同义表述和跨段落描述适合语义检索。我结合两种召回方式，用相关段落在前几位的命中情况及检索延迟，判断是否值得增加重排。</p>
         <p>历史研究还需要定义信息截止时间。年报写的是上一年的经营情况，市场能够读到它的时间却是披露日。我按披露日限定候选材料，避免后来发布的年报进入历史回答。</p>
         <p class="tools">pgvector · BM25 · RRF · BGE Reranker</p>
-      </article>
-      <article>
-        <h3>Agent 评测与错误归因</h3>
+      </article><article>
+        <h4>Agent 评测与错误归因</h4>
         <p>我把评测拆成三个问题：工具有没有取到目标数据，模型有没有正确理解数据，输出里的结论能不能找到依据。即使引用了正确的报表，也可能把单季利润读成累计利润。</p>
         <p>诊断时用同一道题逐层核对检索段落、工具结果和最终回答。原文缺失就检查检索；原文正确而数字错误，就追查抽取、单位换算和计算步骤。用固定题集回归，观察正确性、耗时和调用成本如何一起变化。</p>
         <p class="tools">工具调用评测 · 检索评测 · 引用核验</p>
-      </article>
-      <article>
-        <h3>全栈开发与状态一致性</h3>
+      </article></div></section><section class="group" data-category="web"><h3>全栈开发</h3><div><article>
+        <h4>全栈开发与状态一致性</h4>
         <p>做流式 AI 界面时，我把提交问题、工具执行和回答结束区分为不同状态。用户看到的每条工具结果都要能对应到发起它的调用，两个并行请求即使以相反顺序返回，也应更新各自的状态。</p>
         <p>服务端负责会话和事件顺序，前端负责呈现及恢复。联调时分别检查短暂断网、页面刷新和会话失效：前两种情况需要续传或重建视图，会话失效则需要明确结束等待。</p>
         <p class="tools">React · TypeScript · FastAPI · SSE · ECharts</p>
-      </article>
-      <article>
-        <h3>A 股数据与选股归因</h3>
+      </article></div></section><section class="group" data-category="quant"><h3>量化研究</h3><div><article>
+        <h4>A 股数据与选股归因</h4>
         <p>我先明确筛选日的股票范围、财务数据可用时间和流动性条件，再比较量价、基本面与板块指标。分析个股落选时，先区分它是否满足入池条件，再看哪些指标拉低了排名。</p>
         <p>总分相同的两家公司可能分别受益于低估值和高增长。保留分项和数据日期，才有机会判断某次排名变化来自基本面更新、价格波动，还是候选股票范围发生了变化。</p>
         <p class="tools">Python · pandas · 量价指标 · 多因子筛选</p>
-      </article>
-      <article>
-        <h3>成交模拟与回撤分析</h3>
+      </article><article>
+        <h4>成交模拟与回撤分析</h4>
         <p>回测先对齐信号、下单与可成交时刻。若选股依据包含当天完整成交量，就要等收盘后确认信号，再用后续可交易价格模拟执行，并考虑涨停限制、可卖数量、手续费和滑点。</p>
         <p>解释回撤时，我同时看胜率、平均盈利与平均亏损，再回到回撤区间内的交易记录。少数大额亏损和连续小额亏损可能产生相似的净值曲线，却分别指向仓位暴露、入场条件或退出规则等不同问题。</p>
         <p class="tools">组合回测 · 成交模拟 · 最大回撤 · 交易复盘</p>
-      </article>
-    </div>
-  </main>
-</body>
-</html>
+      </article></div></section></div>
+  </div></section></main><footer class="wrap"><a class="logo" href="#top">Dart<span>.</span></a><a href="#top">回到顶部</a></footer></body></html>
