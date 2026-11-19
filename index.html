@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Dart，高级算法工程师。擅长视觉感知与端侧部署、空间算法、时序预测、运筹优化和大模型应用。">
-  <title>Dart · 高级算法工程师</title>
+  <meta name="description" content="Dart，高级算法工程师。专注 AI Agent、全栈应用开发与 A 股量化研究。">
+  <title>Dart · 高级算法工程师 | AI Agent 与量化研究</title>
   <style>
     :root { color-scheme: light; --ink: #18372d; --paper: #fafbf6; --rule: #c6d2c6; }
     * { box-sizing: border-box; }
@@ -18,6 +18,7 @@
     .intro { padding: clamp(2rem, 6vw, 5rem) 0; }
     h1 { margin: 0; color: #d9f39c; font: normal clamp(5rem, 10vw, 9rem)/1 Georgia, serif; letter-spacing: -.07em; }
     .role { margin: .75rem 0 0; font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 600; }
+    .summary { max-width: 37em; margin: .85rem 0 0; color: #d9e4db; font-size: 1.05rem; }
     main { padding: 3rem 0 4rem; }
     h2 { margin: 0; padding-bottom: .8rem; border-bottom: 2px solid var(--ink); font-size: 1.5rem; }
     .skills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 3.5rem; }
@@ -32,41 +33,43 @@
   <header>
     <div class="wrap">
       <nav aria-label="个人链接"><strong>Dart.</strong><a href="https://github.com/shens3014">GitHub</a></nav>
-      <div class="intro"><h1>Dart.</h1><p class="role">高级算法工程师</p></div>
+      <div class="intro"><h1>Dart.</h1><p class="role">高级算法工程师</p>
+        <p class="summary">我开发能查数据、读公告、调用分析工具的 AI Agent，也把这些能力接入 Web 界面，用于 A 股选股、策略回测和复盘。</p>
+      </div>
     </div>
   </header>
   <main class="wrap" id="skills">
     <h2>专业技能</h2>
     <div class="skills">
       <article>
-        <h3>计算机视觉与端侧推理</h3>
-        <p>将目标检测、多目标跟踪和姿态判断组合为实时感知流程。按场景分析误检与漏检，在板端验证 INT8 量化后的精度和推理延迟。</p>
-        <p class="tools">PyTorch · OpenCV · ONNX · RKNN</p>
+        <h3>AI Agent 与工具编排</h3>
+        <p>实现 ReAct 循环，让模型根据已有结果决定下一步要查什么。将行情、财务和文档查询封装为工具，为多轮调用设置步数上限，并处理重复请求、超时和重试。</p>
+        <p class="tools">Python · ReAct · Function Calling · MCP</p>
       </article>
       <article>
-        <h3>地图匹配与路径规划</h3>
-        <p>用隐马尔可夫模型从带噪声的定位点推断行驶轨迹，将道路连通性和通行方向纳入路径搜索。用离路率、轨迹连续性和处理延迟评估效果。</p>
-        <p class="tools">HMM · GraphHopper · NetworkX</p>
+        <h3>金融文档检索与 RAG</h3>
+        <p>结合关键词和向量检索查找公告段落，融合候选结果后再重排。回看历史时，在检索前按披露日期限定文档范围，确保回答只引用当时已公开的材料。</p>
+        <p class="tools">pgvector · BM25 · RRF · BGE Reranker</p>
       </article>
       <article>
-        <h3>大模型应用与检索评测</h3>
-        <p>将扫描文档解析成可检索的段落，结合关键词检索、向量检索和重排，让回答可追溯到原页。编排多轮工具调用，用标注集定位字段遗漏和生成错误。</p>
-        <p class="tools">OCR · BM25 · BGE · LangGraph · MCP</p>
+        <h3>Agent 评测与故障定位</h3>
+        <p>用固定问题集分别检查工具是否调用成功、检索是否命中、回答是否有原文支持。结合每轮的参数、耗时和 Token 用量，定位误调用和重复查询。</p>
+        <p class="tools">工具调用评测 · 检索评测 · 引用核验</p>
       </article>
       <article>
-        <h3>时序预测与可解释建模</h3>
-        <p>对齐气象、设备和业务数据，构建分区多步预测模型，按预测窗口评估误差。结合规则与特征贡献分析，解释业务指标波动。</p>
-        <p class="tools">TimesNet · XGBoost · LightGBM · SHAP</p>
+        <h3>AI 应用全栈开发</h3>
+        <p>用 FastAPI 将分析工具接入 Web 服务，通过 SSE 推送会话事件。在 React 界面中逐步呈现工具调用、返回结果和异常状态，并用交互图表展示行情与复盘数据。</p>
+        <p class="tools">React · TypeScript · FastAPI · SSE · ECharts</p>
       </article>
       <article>
-        <h3>运筹优化与资源分配</h3>
-        <p>把资源占用、时间冲突等业务约束写成整数规划模型，求解静态分配方案，并在突发事件改变约束时重新分配资源。</p>
-        <p class="tools">Python · Pyomo · HiGHS</p>
+        <h3>A 股数据分析与选股</h3>
+        <p>整合行情、财务指标与板块数据，将量价形态、基本面条件和板块强弱转成可重复运行的筛选规则。复盘时对照历史信号，追溯个股入选的原因。</p>
+        <p class="tools">Python · pandas · 量价指标 · 多因子筛选</p>
       </article>
       <article>
-        <h3>算法服务与实时数据处理</h3>
-        <p>把推理和路径计算封装成 API，按实体分片处理有序消息，用缓存复用历史结果。通过离线回放和延迟分位数检查服务表现。</p>
-        <p class="tools">FastAPI · Spring Boot · Kafka · Redis · Docker</p>
+        <h3>策略回测与风险分析</h3>
+        <p>将选股信号与模拟成交分开，按次日开盘价撮合，并计入 T+1、涨停限制、手续费和滑点。结合最大回撤和逐笔成交记录，检查策略在哪些行情下容易失效。</p>
+        <p class="tools">组合回测 · 成交模拟 · 最大回撤 · 交易复盘</p>
       </article>
     </div>
   </main>
