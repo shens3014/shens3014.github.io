@@ -76,18 +76,36 @@ const canvas = document.querySelector('.field');
 const ctx = canvas.getContext('2d');
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 let width, height, frame, elapsed = 0, previous = 0, onscreen = true;
-let aim = 0, tilt = 0;
+const pointer = { targetX: 0, targetY: 0, x: 0, y: 0 };
+function sculptureLayout(w, h) {
+  const compact = w < 750;
+  return {
+    x: w * (compact ? .69 : .75),
+    y: h * (compact ? .28 : .49),
+    scale: Math.min(w * (compact ? .35 : .21), h * (compact ? .35 : .52))
+  };
+}
 const palettes = {agent:[210,279,157], web:[154,215,183], quant:[276,333,45]};
 function paint(now) {
   frame = 0;
   if (!ctx || !onscreen || document.hidden) return;
-  if (previous && !reduced.matches) elapsed += Math.min(now-previous,80)/1000;
+  const dt = previous ? Math.min(now - previous, 80) / 1000 : 1 / 60;
   previous = now;
-  tilt += (aim-tilt)*.05;
+  if (!reduced.matches) elapsed += dt;
+  const follow = 1 - Math.exp(-dt / .085);
+  pointer.x += (pointer.targetX - pointer.x) * follow;
+  pointer.y += (pointer.targetY - pointer.y) * follow;
   ctx.clearRect(0,0,width,height);
-  const mobile = width < 750;
-  const cx=width*(mobile?.69:.75), cy=height*(mobile?.28:.49);
-  const scale=Math.min(width*(mobile?.35:.21),height*(mobile?.35:.52));
+  const layout = sculptureLayout(width, height);
+  const scale = layout.scale;
+  const cx = layout.x + scale * .13 * pointer.x;
+  const cy = layout.y + scale * .10 * pointer.y;
+  const yaw = pointer.x * .88;
+  const pitch = .90 - pointer.y * .58;
+  const roll = -.51 + pointer.x * .12;
+  const cosYaw = Math.cos(yaw), sinYaw = Math.sin(yaw);
+  const cosPitch = Math.cos(pitch), sinPitch = Math.sin(pitch);
+  const cosRoll = Math.cos(roll), sinRoll = Math.sin(roll);
   const phase=elapsed*.15+step*.18, colors=palettes[mode];
   ctx.globalCompositeOperation='lighter';
   // Nested filaments follow a twisted torus, lit along their projected depth.
@@ -102,11 +120,13 @@ function paint(now) {
       const twist=angle+2*u+phase;
       const radius=.83+.29*Math.cos(twist)+.1*Math.cos(3*u+phase);
       const x=radius*Math.cos(u), y=radius*Math.sin(u), z=.37*Math.sin(twist)+.29*Math.sin(2*u+phase);
-      const py=.62*y-.78*z, depth=.78*y+.62*z;
+      const rx = x*cosYaw + z*sinYaw;
+      const rz = z*cosYaw - x*sinYaw;
+      const py = y*cosPitch - rz*sinPitch;
+      const depth = y*sinPitch + rz*cosPitch;
       const k=scale/(1-.18*depth);
-      const roll=-.51+tilt*.12;
-      const px=cx+k*(x*Math.cos(roll)-py*Math.sin(roll));
-      const sy=cy+k*(x*Math.sin(roll)+py*Math.cos(roll));
+      const px=cx+k*(rx*cosRoll-py*sinRoll);
+      const sy=cy+k*(rx*sinRoll+py*cosRoll);
       if(j===0) ctx.moveTo(px,sy); else ctx.lineTo(px,sy);
     }
     ctx.stroke();
@@ -125,6 +145,25 @@ new ResizeObserver(()=>{
   staticOrAnimate();
 }).observe(canvas);
 new IntersectionObserver(([entry])=>{onscreen=entry.isIntersecting;previous=0;staticOrAnimate()}).observe(canvas);
-document.querySelector('.stage').addEventListener('pointermove',e=>{if(!reduced.matches) aim=e.clientX/width-.5});
+const stage = document.querySelector('.stage');
+function centerPointer() {
+  pointer.targetX = pointer.targetY = 0;
+}
+stage.addEventListener('pointermove', event => {
+  if (reduced.matches || event.pointerType === 'touch') return;
+  const rect = canvas.getBoundingClientRect();
+  const layout = sculptureLayout(rect.width, rect.height);
+  if (!layout.scale) return;
+  const clamp = value => Math.max(-1, Math.min(1, value));
+  pointer.targetX = clamp((event.clientX - rect.left - layout.x) / layout.scale);
+  pointer.targetY = clamp((event.clientY - rect.top - layout.y) / layout.scale);
+});
+stage.addEventListener('pointerleave', centerPointer);
+stage.addEventListener('pointercancel', centerPointer);
+window.addEventListener('blur', centerPointer);
 document.addEventListener('visibilitychange',()=>{previous=0;staticOrAnimate()});
-reduced.addEventListener('change',staticOrAnimate);
+reduced.addEventListener('change', () => {
+  centerPointer();
+  pointer.x = pointer.y = 0;
+  staticOrAnimate();
+});
