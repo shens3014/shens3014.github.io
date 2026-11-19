@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Dart · 个人主页</title>
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#fafaf5;color:#182e29;font:1rem/1.7 "Helvetica Neue","PingFang SC",sans-serif}main,header,footer{max-width:1160px;margin:auto;padding:0 5vw}header,footer,nav{display:flex;align-items:center;justify-content:space-between;gap:1.4rem}header{height:76px;border-bottom:1px solid #c5cec3}a{color:inherit;text-underline-offset:5px}nav a,header strong{text-decoration:none}header strong{font: bold 1.5rem Georgia}.hero{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:6%;padding:4rem 0}.hero h1{font:normal clamp(6rem,12vw,11rem)/.95 Georgia;margin:.4rem 0 1.5rem;letter-spacing:-.07em}.hero p{max-width:29em}h2{font-size:2rem;margin:0 0 1rem}figure{margin:0;background:#173a32;color:#eff7d6;border-radius:4px;overflow:hidden}canvas{display:block;width:100%;aspect-ratio:1.65}figcaption{padding:1rem 1.25rem;border-top:1px solid #547265;font-size:.9rem}section.archive{border-top:1px solid #a6b5a8;padding:2rem 0}article{display:grid;grid-template-columns:1fr 1.6fr;align-items:baseline;gap:2rem;padding:1.2rem 0;border-bottom:1px solid #dbe0d4}h3,p{margin:.4rem 0}article p{color:#495951}small{color:#50695b;font-family:monospace;font-size:.85rem}footer{padding-top:2rem;padding-bottom:2rem}a:hover{color:#537741}@media(max-width:700px){.hero,article{grid-template-columns:1fr;gap:1rem}.hero{padding:2.5rem 0}.hero figure{margin-top:1rem}nav{gap:.8rem}article{gap:0}header{height:64px}}
+</style><body><header><strong>Dart.</strong><nav aria-label="主导航"><a href="#work">工作项目</a><a href="#lab">个人实验</a><a href="https://github.com/shens3014">GitHub</a></nav></header><main><section class="hero"><div><small>算法研发 / 个人作品集</small><h1>Dart.</h1><p>你好，我是 Dart。我做计算机视觉、空间算法和 AI 应用。在机场，我用路网还原车辆轨迹，用摄像头识别地面保障进度；在自己的项目里，我探索怎样让模型的输出更容易核验。</p></div><figure><canvas width="800" height="485" aria-label="道路、定位观测点与匹配轨迹的示意图"></canvas><figcaption>机场大巴定位 · 路网匹配示意</figcaption></figure></section>
+<section id="work" class="archive"><h2>工作项目</h2>
+<article><div><small>GIS / HMM</small><h3>让大巴轨迹沿道路行进</h3></div><p>GPS 漂移时，大屏上的车辆会看起来像在穿过建筑。我用围栏清洗定位点，再结合连续观测和路网匹配行驶路径。在 241 辆车的离线评测中，离路点占比从 20.7% 降到 0%。</p></article>
+<article><div><small>计算机视觉 / 边缘推理</small><h3>识别驾驶员的状态与行为</h3></div><p>结合人脸、人体与舱内物体识别打电话、疲劳等状态。针对侧脸和低头时眼嘴比例容易失真的问题，引入头部姿态约束，并把模型量化部署到瑞芯微板卡。</p></article>
+<article><div><small>目标检测 / 机场运行</small><h3>记录地面保障的起止时刻</h3></div><p>从机坪画面中识别车辆与设备，将检测结果转成配餐、加油等作业的起止时刻。我参与了从训练数据清洗到机场现场板端联调的全过程。</p></article>
+<article><div><small>OCR / 多模态模型</small><h3>Doc2Form · 把纸质表单变成配置</h3></div><p>让扫描件里的字段对应到前端组件。我负责 Agent 主流程、组件知识库和模型选型，用字段级标注逐项检查遗漏、误读及模型凭空添加的字段。</p></article></section>
+<section id="lab" class="archive"><h2>个人实验</h2>
+<article><div><small>知识检索 / RAG</small><h3>可以翻回原页的教材问答</h3></div><p>我把十本扫描版中医教材做成可检索的知识库。回答附上书名和页码，还能查看原文裁片，方便核对扫描识别有疑问的字句。</p></article>
+<article><div><small>视频信号 / 本地推理</small><h3>Facephys · 从视频观察脉搏</h3></div><p>基于开源模型搭建的个人研究原型，用摄像头画面估计心率，并在实时面板中展示眨眼和采集质量。视频帧和推理都留在本机。</p></article></section></main><footer><strong>Dart.</strong><a href="https://github.com/shens3014">在 GitHub 找到我</a></footer>
+<script>
+const ctx=document.querySelector('canvas').getContext('2d');
+ctx.translate(400,240);ctx.rotate(-0.32);
+function path(points,color,width){ctx.beginPath();points.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.strokeStyle=color;ctx.lineWidth=width;ctx.lineJoin='round';ctx.stroke()}
+for(let x=-560;x<560;x+=76)for(let y=-440;y<440;y+=62){ctx.fillStyle=(Math.abs(x+y)%3?'#24463b':'#305142');ctx.fillRect(x+6,y+6,63,49);ctx.strokeStyle='#456555';ctx.strokeRect(x+6,y+6,63,49)}
+const route=[[-408,118],[-180,118],[-104,56],[-104,-68],[124,-68],[200,-130],[428,-130]];
+path(route,'#102e27',18);path(route,'#c7ec83',7);
+route.slice(1,-1).forEach(([x,y],i)=>{ctx.beginPath();ctx.arc(x,y,7,0,2*Math.PI);ctx.fillStyle='#ecf7cc';ctx.fill();const px=x+18+i*2,py=y+24;path([[x,y],[px,py]],'#99b8a8',2);ctx.beginPath();ctx.arc(px,py,5,0,2*Math.PI);ctx.strokeStyle='#b3c6b9';ctx.stroke()});
+</script></body></html>
