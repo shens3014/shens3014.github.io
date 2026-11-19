@@ -5,19 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Dart，高级算法工程师。专注 AI Agent、全栈应用开发与 A 股量化研究。">
   <title>Dart · 高级算法工程师 | AI Agent 与量化研究</title>
-  <meta name="theme-color" content="#f8f8f6">
+  <meta name="theme-color" content="#090b11">
   <link rel="stylesheet" href="style.css">
   <script src="motion.js" defer></script>
 </head>
 <body>
   <header><nav class="wrap"><a class="logo" href="#top" aria-label="Dart 首页">Dart<span>.</span></a>
     <div><a href="#skills">专业技能</a><a class="github" href="https://github.com/shens3014">GitHub</a></div></nav></header>
-  <main id="top"><section class="hero wrap">
-    <div class="intro"><p class="role">高级算法工程师</p><h1>Dart<span>.</span></h1>
-    <p class="lead">AI Agent<span> / </span>全栈开发<span> / </span>量化研究</p>
-    <p class="summary">我开发能查数据、读公告、调用分析工具的 AI Agent，也把这些能力接入 Web 界面，用于 A 股选股、策略回测和复盘。</p>
-    <a class="button" href="#skills">探索专业技能</a></div>
-    <div class="sculpture"><canvas aria-hidden="true"></canvas></div>
+  <main id="top">
+  <section class="stage">
+    <canvas class="field" aria-hidden="true"></canvas>
+    <div class="wrap hero">
+      <p class="role">高级算法工程师</p>
+      <h1>Dart<span>.</span></h1>
+      <p class="lead">AI Agent <i>/</i> Full Stack <i>/</i> Quant</p>
+      <p class="summary">让 Agent 查到证据，让界面还原执行过程，让量化信号经得起回测。</p>
+      <a class="button" href="#bench">进入交互演示</a>
+    </div>
+  </section>
+  <section id="bench" class="bench wrap" aria-label="技能交互演示">
+    <div class="benchbar"><strong>执行台</strong><span>本地推演</span></div>
+    <div class="console">
+      <div class="modes" role="group" aria-label="演示场景">
+        <button data-mode="agent" aria-pressed="true">Agent 调度</button>
+        <button data-mode="web" aria-pressed="false">会话恢复</button>
+        <button data-mode="quant" aria-pressed="false">量化回放</button>
+      </div>
+      <div class="trace"><div class="timeline" aria-label="执行阶段"></div>
+      <p class="readout" aria-live="polite"></p></div>
+      <button class="next" type="button">执行下一步</button>
+    </div>
   </section>
   <section id="skills" class="library"><div class="wrap"><h2>专业技能<span>.</span></h2>
     <div class="filters" aria-label="筛选技能" role="group" hidden><button type="button" data-filter="all" aria-pressed="true">全部</button><button type="button" data-filter="agent" aria-pressed="false">AI Agent</button><button type="button" data-filter="web" aria-pressed="false">全栈开发</button><button type="button" data-filter="quant" aria-pressed="false">量化研究</button></div>
